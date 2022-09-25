@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:indicacoes/screens/tela_escolha_indicacao.dart';
+import 'package:indicacoes/screens/tela_indicacao.dart';
 
 import '../config/cores.dart';
 import '../widgets/botao.dart';
@@ -19,6 +20,12 @@ class _TelaInicialState extends State<TelaInicial> {
   void _avancarPagina() {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => const TelaEscolhaIndicacao(),
+    ));
+  }
+
+  void _avancarParaRecomendacaoAleatoria() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const TelaIndicacao("", "", true),
     ));
   }
 
@@ -85,7 +92,7 @@ class _TelaInicialState extends State<TelaInicial> {
                   Botao(
                     "Indicação aleatória",
                     Icons.done_rounded,
-                    _avancarPagina,
+                    _avancarParaRecomendacaoAleatoria,
                   ),
                 ],
               ),

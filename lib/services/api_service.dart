@@ -50,7 +50,7 @@ Future<Indicacao> getRecommendation(context, tipoIndicacao, genero) async {
         tipoIndicacao == 'Série' ? indicacao["name"] : indicacao["title"];
     var descricao = indicacao["overview"];
     var pathImagem =
-        "https://image.tmdb.org/t/p/w500/${indicacao["backdrop_path"]}";
+        "https://image.tmdb.org/t/p/w500/${indicacao["poster_path"]}";
     var nota = indicacao["vote_average"];
 
     Indicacao indicacaoTratada = Indicacao(
@@ -64,7 +64,50 @@ Future<Indicacao> getRecommendation(context, tipoIndicacao, genero) async {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text(
-          'Ocorreu um erro ao obter a lista de gêneros. Por favor, tente novamente mais tarde.'),
+          'Ocorreu um erro ao obter a indicação. Por favor, tente novamente mais tarde.'),
+      duration: Duration(seconds: 5),
+      backgroundColor: Colors.red,
+    ));
+    return Indicacao(
+        titulo: "Nenhuma indicação encontrada",
+        pathImagem:
+            "https://cdn.pixabay.com/photo/2016/05/14/18/23/emoticon-1392275_960_720.png",
+        descricao:
+            "Parece que deu algo errado... por gentileza, clique no botão abaixo para tentar novamente.",
+        nota: 0.0);
+  }
+}
+
+Future<Indicacao> getRandomRecommendation(context) async {
+  try {
+    var dio = Dio();
+    String path = 'http://localhost:3730/randomizer';
+
+    var resposta = await dio.get(path);
+    print(resposta);
+
+    var tipo = resposta.data["data"]["type"];
+
+    var indicacao = resposta.data["data"]["recommendation"];
+
+    var titulo = tipo == 'Série' ? indicacao["name"] : indicacao["title"];
+    var descricao = indicacao["overview"];
+    var pathImagem =
+        "https://image.tmdb.org/t/p/w500/${indicacao["poster_path"]}";
+    var nota = indicacao["vote_average"];
+
+    Indicacao indicacaoTratada = Indicacao(
+        titulo: titulo,
+        descricao: descricao,
+        pathImagem: pathImagem,
+        nota: nota);
+
+    return indicacaoTratada;
+  } catch (erro) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text(
+          'Ocorreu um erro ao obter a indicação. Por favor, tente novamente mais tarde.'),
       duration: Duration(seconds: 5),
       backgroundColor: Colors.red,
     ));

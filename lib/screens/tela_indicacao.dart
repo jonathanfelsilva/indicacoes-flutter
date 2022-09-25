@@ -8,11 +8,12 @@ import '../widgets/botao.dart';
 import '../services/api_service.dart' as api;
 
 class TelaIndicacao extends StatefulWidget {
-  const TelaIndicacao(this.tipoIndicacao, this.genero, {Key? key})
+  const TelaIndicacao(this.tipoIndicacao, this.genero, this.random, {Key? key})
       : super(key: key);
 
   final String? tipoIndicacao;
   final String? genero;
+  final bool? random;
 
   @override
   State<TelaIndicacao> createState() => _TelaIndicacaoState();
@@ -21,13 +22,18 @@ class TelaIndicacao extends StatefulWidget {
 class _TelaIndicacaoState extends State<TelaIndicacao> {
   void _gerarOutraRecomendacao() {
     Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (context) => TelaIndicacao(widget.tipoIndicacao, widget.genero),
+      builder: (context) =>
+          TelaIndicacao(widget.tipoIndicacao, widget.genero, widget.random),
     ));
   }
 
   Future<Indicacao> _gerarIndicacao() async {
-    return await api.getRecommendation(
-        context, widget.tipoIndicacao, widget.genero);
+    Indicacao indicacao = widget.random == false
+        ? await api.getRecommendation(
+            context, widget.tipoIndicacao, widget.genero)
+        : await api.getRandomRecommendation(context);
+
+    return indicacao;
   }
 
   @override
@@ -50,62 +56,6 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
             return const Center(
               child: CircularProgressIndicator(),
             );
-
-            //Column(
-            //   children: [
-            //     Center(
-            //       child: SingleChildScrollView(
-            //         physics: const BouncingScrollPhysics(),
-            //         child: Padding(
-            //           padding: const EdgeInsets.all(44.0),
-            //           child: Column(children: <Widget>[
-            //             const SizedBox(
-            //               height: 50,
-            //             ),
-            //             SvgPicture.asset(
-            //               "assets/images/Tela_3.svg",
-            //               height: MediaQuery.of(context).size.height * 0.3,
-            //             ),
-            //             const SizedBox(
-            //               height: 50,
-            //             ),
-            //             FittedBox(
-            //               fit: BoxFit.scaleDown,
-            //               child: Text(
-            //                 "Buscando...",
-            //                 textAlign: TextAlign.center,
-            //                 style: GoogleFonts.quicksand(
-            //                   fontSize: 64,
-            //                   fontWeight: FontWeight.w600,
-            //                   color: Cores.ROXO,
-            //                 ),
-            //               ),
-            //             ),
-            //             const SizedBox(
-            //               height: 20,
-            //             ),
-            //             FittedBox(
-            //               fit: BoxFit.scaleDown,
-            //               child: Text(
-            //                 "Já pode ir preparando\na pipoca!",
-            //                 style: GoogleFonts.quicksand(
-            //                   fontSize: 36,
-            //                   fontWeight: FontWeight.w400,
-            //                   color: Colors.grey,
-            //                 ),
-            //                 textAlign: TextAlign.center,
-            //               ),
-            //             ),
-            //             const SizedBox(
-            //               width: 50,
-            //             ),
-            //           ]),
-            //         ),
-            //       ),
-            //     ),
-            //     CircularProgressIndicator(),
-            //   ],
-            //);
           } else {
             return Center(
               child: SingleChildScrollView(
@@ -143,7 +93,7 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
                       snapshot.data!.titulo,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.quicksand(
-                        fontSize: 64,
+                        fontSize: 56,
                         fontWeight: FontWeight.w600,
                         color: Cores.ROXO,
                       ),
@@ -156,7 +106,7 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
                       child: Text(
                         snapshot.data!.descricao,
                         style: GoogleFonts.quicksand(
-                          fontSize: 20,
+                          fontSize: 19,
                           fontWeight: FontWeight.w400,
                           color: Colors.black,
                         ),

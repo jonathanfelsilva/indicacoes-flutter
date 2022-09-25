@@ -23,7 +23,7 @@ class _TelaEscolhaGeneroState extends State<TelaEscolhaGenero> {
 
   void _avancarPagina() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => TelaIndicacao(widget.tipoIndicacao, genero),
+      builder: (context) => TelaIndicacao(widget.tipoIndicacao, genero, false),
     ));
   }
 
