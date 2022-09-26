@@ -78,7 +78,31 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
                       height: 20,
                     ),
                     Text(
-                      'Avaliação: ${snapshot.data!.nota.toString()}',
+                      snapshot.data!.titulo,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.quicksand(
+                        fontSize: 50,
+                        fontWeight: FontWeight.w600,
+                        color: Cores.ROXO,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      snapshot.data!.generos,
+                      style: GoogleFonts.quicksand(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Nota: ${snapshot.data!.nota.toString()}',
                       style: GoogleFonts.quicksand(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -89,16 +113,6 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Text(
-                      snapshot.data!.titulo,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.quicksand(
-                        fontSize: 56,
-                        fontWeight: FontWeight.w600,
-                        color: Cores.ROXO,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
                     SizedBox(
                       width: MediaQuery.of(context).size.width < 600
                           ? MediaQuery.of(context).size.width * 0.8

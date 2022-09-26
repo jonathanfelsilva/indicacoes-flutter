@@ -52,12 +52,14 @@ Future<Indicacao> getRecommendation(context, tipoIndicacao, genero) async {
     var pathImagem =
         "https://image.tmdb.org/t/p/w500/${indicacao["poster_path"]}";
     var nota = indicacao["vote_average"];
+    var generos = indicacao["genres"];
 
     Indicacao indicacaoTratada = Indicacao(
         titulo: titulo,
         descricao: descricao,
         pathImagem: pathImagem,
-        nota: nota);
+        nota: nota,
+        generos: generos);
 
     return indicacaoTratada;
   } catch (erro) {
@@ -74,7 +76,8 @@ Future<Indicacao> getRecommendation(context, tipoIndicacao, genero) async {
             "https://cdn.pixabay.com/photo/2016/05/14/18/23/emoticon-1392275_960_720.png",
         descricao:
             "Parece que deu algo errado... por gentileza, clique no botão abaixo para tentar novamente.",
-        nota: 0.0);
+        nota: 0.0,
+        generos: "");
   }
 }
 
@@ -84,7 +87,6 @@ Future<Indicacao> getRandomRecommendation(context) async {
     String path = 'http://localhost:3730/randomizer';
 
     var resposta = await dio.get(path);
-    print(resposta);
 
     var tipo = resposta.data["data"]["type"];
 
@@ -95,12 +97,14 @@ Future<Indicacao> getRandomRecommendation(context) async {
     var pathImagem =
         "https://image.tmdb.org/t/p/w500/${indicacao["poster_path"]}";
     var nota = indicacao["vote_average"];
+    var generos = indicacao["genres"];
 
     Indicacao indicacaoTratada = Indicacao(
         titulo: titulo,
         descricao: descricao,
         pathImagem: pathImagem,
-        nota: nota);
+        nota: nota,
+        generos: generos);
 
     return indicacaoTratada;
   } catch (erro) {
@@ -117,6 +121,7 @@ Future<Indicacao> getRandomRecommendation(context) async {
             "https://cdn.pixabay.com/photo/2016/05/14/18/23/emoticon-1392275_960_720.png",
         descricao:
             "Parece que deu algo errado... por gentileza, clique no botão abaixo para tentar novamente.",
-        nota: 0.0);
+        nota: 0.0,
+        generos: "");
   }
 }
