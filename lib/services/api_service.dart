@@ -53,13 +53,15 @@ Future<Indicacao> getRecommendation(context, tipoIndicacao, genero) async {
         "https://image.tmdb.org/t/p/w500/${indicacao["poster_path"]}";
     var nota = indicacao["vote_average"];
     var generos = indicacao["genres"];
+    var lugaresDisponibilidade = indicacao["placesToWatch"] ?? [];
 
     Indicacao indicacaoTratada = Indicacao(
         titulo: titulo,
         descricao: descricao,
         pathImagem: pathImagem,
         nota: nota,
-        generos: generos);
+        generos: generos,
+        lugaresDisponibilidade: lugaresDisponibilidade);
 
     return indicacaoTratada;
   } catch (erro) {
@@ -74,10 +76,10 @@ Future<Indicacao> getRecommendation(context, tipoIndicacao, genero) async {
         titulo: "Nenhuma indicação encontrada",
         pathImagem:
             "https://cdn.pixabay.com/photo/2016/05/14/18/23/emoticon-1392275_960_720.png",
-        descricao:
-            "Parece que deu algo errado... por gentileza, clique no botão abaixo para tentar novamente.",
+        descricao: "Parece que deu algo errado... por gentileza, clique no botão abaixo para tentar novamente.",
         nota: 0.0,
-        generos: "");
+        generos: "",
+        lugaresDisponibilidade: [{}]);
   }
 }
 
@@ -95,16 +97,18 @@ Future<Indicacao> getRandomRecommendation(context) async {
     var titulo = tipo == 'Série' ? indicacao["name"] : indicacao["title"];
     var descricao = indicacao["overview"];
     var pathImagem =
-        "https://image.tmdb.org/t/p/w500/${indicacao["poster_path"]}";
+        "https://image.tmdb.org/t/p/w500${indicacao["poster_path"]}";
     var nota = indicacao["vote_average"];
     var generos = indicacao["genres"];
+    var lugaresDisponibilidade = indicacao["placesToWatch"] ?? [];
 
     Indicacao indicacaoTratada = Indicacao(
         titulo: titulo,
         descricao: descricao,
         pathImagem: pathImagem,
         nota: nota,
-        generos: generos);
+        generos: generos,
+        lugaresDisponibilidade: lugaresDisponibilidade);
 
     return indicacaoTratada;
   } catch (erro) {
@@ -119,9 +123,9 @@ Future<Indicacao> getRandomRecommendation(context) async {
         titulo: "Nenhuma indicação encontrada",
         pathImagem:
             "https://cdn.pixabay.com/photo/2016/05/14/18/23/emoticon-1392275_960_720.png",
-        descricao:
-            "Parece que deu algo errado... por gentileza, clique no botão abaixo para tentar novamente.",
+        descricao: "Parece que deu algo errado... por gentileza, clique no botão abaixo para tentar novamente.",
         nota: 0.0,
-        generos: "");
+        generos: "",
+        lugaresDisponibilidade: [{}]);
   }
 }

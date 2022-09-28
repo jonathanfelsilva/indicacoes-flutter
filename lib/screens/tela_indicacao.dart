@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../config/cores.dart';
@@ -53,8 +54,50 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
         future: _gerarIndicacao(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    "assets/images/Tela_3.svg",
+                    height: MediaQuery.of(context).size.height * 0.3,
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      "Buscando...",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.quicksand(
+                        fontSize: 60,
+                        fontWeight: FontWeight.w600,
+                        color: Cores.ROXO,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      "Já pode ir pegando a pipoca!",
+                      style: GoogleFonts.quicksand(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromARGB(255, 100, 100, 100),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  const CircularProgressIndicator()
+                ],
+              ),
             );
           } else {
             return Center(
@@ -68,8 +111,10 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
                     ),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        snapshot.data!.pathImagem,
+                      child: FadeInImage.assetNetwork(
+                        fadeInDuration: const Duration(milliseconds: 100),
+                        image: snapshot.data!.pathImagem,
+                        placeholder: '/images/Transparente.png',
                         height: 300,
                         fit: BoxFit.cover,
                       ),
@@ -99,7 +144,7 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Text(
                       'Nota: ${snapshot.data!.nota.toString()}',
@@ -109,6 +154,54 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
                         color: Colors.black,
                       ),
                       textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 3,
+                      alignment: WrapAlignment.center,
+                      children: snapshot.data!.lugaresDisponibilidade
+                          .map((lugar) => Column(
+                                children: [
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: FadeInImage.assetNetwork(
+                                      fadeInDuration:
+                                          const Duration(milliseconds: 100),
+                                      image:
+                                          'https://image.tmdb.org/t/p/w500${lugar["logo_path"]}',
+                                      placeholder: '/images/Transparente.png',
+                                      height: 50,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  SizedBox(
+                                    width: 70,
+                                    child: Wrap(children: [
+                                      Center(
+                                        child: Text(
+                                          lugar["provider_name"],
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.quicksand(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            color: Cores.ROXO,
+                                          ),
+                                        ),
+                                      ),
+                                    ]),
+                                  )
+                                ],
+                              ))
+                          .toList(),
                     ),
                     const SizedBox(
                       height: 20,

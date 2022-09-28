@@ -4,13 +4,16 @@ class Indicacao {
   String pathImagem;
   double nota;
   String generos;
+  List<dynamic> lugaresDisponibilidade;
 
-  Indicacao(
-      {required this.titulo,
-      required this.descricao,
-      required this.pathImagem,
-      required this.nota,
-      required this.generos});
+  Indicacao({
+    required this.titulo,
+    required this.descricao,
+    required this.pathImagem,
+    required this.nota,
+    required this.generos,
+    required this.lugaresDisponibilidade,
+  });
 
   @override
   String toString() {
