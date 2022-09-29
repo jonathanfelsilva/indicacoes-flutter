@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:indicacoes/screens/tela_escolha_indicacao.dart';
+import 'package:indicacoes/screens/tela_escolha_tipo_indicacao.dart';
 import 'package:indicacoes/screens/tela_indicacao.dart';
+import 'package:indicacoes/screens/tela_top_tres.dart';
+
+import '../services/api_service.dart' as api;
 
 import '../config/cores.dart';
 import '../widgets/botao.dart';
@@ -19,13 +22,13 @@ class _TelaInicialState extends State<TelaInicial> {
 
   void _avancarPagina() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const TelaEscolhaIndicacao(),
+      builder: (context) => const TelaEscolhaTipoIndicacao(),
     ));
   }
 
-  void _avancarParaRecomendacaoAleatoria() {
+  void _avancarParaTopTres() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const TelaIndicacao("", "", true),
+      builder: (context) => const TelaTopTres(),
     ));
   }
 
@@ -67,7 +70,7 @@ class _TelaInicialState extends State<TelaInicial> {
               FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  "Escolha uma opção e deixe\no resto com a gente.",
+                  "Como podemos te ajudar?",
                   style: GoogleFonts.quicksand(
                     fontSize: 36,
                     fontWeight: FontWeight.w400,
@@ -82,7 +85,7 @@ class _TelaInicialState extends State<TelaInicial> {
               Column(
                 children: [
                   Botao(
-                    "Indicação detalhada",
+                    "Quero uma indicação",
                     Icons.done_rounded,
                     _avancarPagina,
                   ),
@@ -90,9 +93,9 @@ class _TelaInicialState extends State<TelaInicial> {
                     height: 20,
                   ),
                   Botao(
-                    "Indicação aleatória",
+                    "Quero ver o Top 3",
                     Icons.done_rounded,
-                    _avancarParaRecomendacaoAleatoria,
+                    _avancarParaTopTres,
                   ),
                 ],
               ),

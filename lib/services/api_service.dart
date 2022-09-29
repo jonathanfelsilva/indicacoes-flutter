@@ -46,6 +46,7 @@ Future<Indicacao> getRecommendation(context, tipoIndicacao, genero) async {
     var resposta = await dio.get(path);
     var indicacao = resposta.data["data"];
 
+    var id = indicacao["id"];
     var titulo =
         tipoIndicacao == 'Série' ? indicacao["name"] : indicacao["title"];
     var descricao = indicacao["overview"];
@@ -56,6 +57,7 @@ Future<Indicacao> getRecommendation(context, tipoIndicacao, genero) async {
     var lugaresDisponibilidade = indicacao["placesToWatch"] ?? [];
 
     Indicacao indicacaoTratada = Indicacao(
+        id: id,
         titulo: titulo,
         descricao: descricao,
         pathImagem: pathImagem,
@@ -73,6 +75,7 @@ Future<Indicacao> getRecommendation(context, tipoIndicacao, genero) async {
       backgroundColor: Colors.red,
     ));
     return Indicacao(
+        id: 1,
         titulo: "Nenhuma indicação encontrada",
         pathImagem:
             "https://cdn.pixabay.com/photo/2016/05/14/18/23/emoticon-1392275_960_720.png",
@@ -94,6 +97,7 @@ Future<Indicacao> getRandomRecommendation(context) async {
 
     var indicacao = resposta.data["data"]["recommendation"];
 
+    var id = indicacao["id"];
     var titulo = tipo == 'Série' ? indicacao["name"] : indicacao["title"];
     var descricao = indicacao["overview"];
     var pathImagem =
@@ -103,6 +107,7 @@ Future<Indicacao> getRandomRecommendation(context) async {
     var lugaresDisponibilidade = indicacao["placesToWatch"] ?? [];
 
     Indicacao indicacaoTratada = Indicacao(
+        id: id,
         titulo: titulo,
         descricao: descricao,
         pathImagem: pathImagem,
@@ -120,6 +125,7 @@ Future<Indicacao> getRandomRecommendation(context) async {
       backgroundColor: Colors.red,
     ));
     return Indicacao(
+        id: 1,
         titulo: "Nenhuma indicação encontrada",
         pathImagem:
             "https://cdn.pixabay.com/photo/2016/05/14/18/23/emoticon-1392275_960_720.png",
@@ -127,5 +133,59 @@ Future<Indicacao> getRandomRecommendation(context) async {
         nota: 0.0,
         generos: "",
         lugaresDisponibilidade: [{}]);
+  }
+}
+
+Future<List<Indicacao>> getTopThree(context, serieOuFilme) async {
+  try {
+    var dio = Dio();
+    String path = '';
+
+    if (serieOuFilme == 'Série') {
+      path = 'http://localhost:3730/tv-series/top-three';
+    } else {
+      path = 'http://localhost:3730/movies/top-three';
+    }
+
+    var resposta = await dio.get(path);
+    List indicacoes = resposta.data["data"];
+
+    List<Indicacao> topTres = [];
+
+    for (var i = 0; i < indicacoes.length; i++) {
+      var indicacao = indicacoes[i];
+
+      var id = indicacao["id"];
+      var titulo =
+          serieOuFilme == 'Série' ? indicacao["name"] : indicacao["title"];
+      var descricao = indicacao["overview"];
+      var pathImagem =
+          "https://image.tmdb.org/t/p/w500${indicacao["poster_path"]}";
+      var nota = indicacao["vote_average"];
+      var generos = indicacao["genres"];
+      var lugaresDisponibilidade = indicacao["placesToWatch"] ?? [];
+
+      Indicacao indicacaoTratada = Indicacao(
+          id: id,
+          titulo: titulo,
+          descricao: descricao,
+          pathImagem: pathImagem,
+          nota: nota,
+          generos: generos,
+          lugaresDisponibilidade: lugaresDisponibilidade);
+
+      topTres.add(indicacaoTratada);
+    }
+
+    return topTres;
+  } catch (erro) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text(
+          'Ocorreu um erro ao obter a indicação. Por favor, tente novamente mais tarde.'),
+      duration: Duration(seconds: 5),
+      backgroundColor: Colors.red,
+    ));
+    return [];
   }
 }

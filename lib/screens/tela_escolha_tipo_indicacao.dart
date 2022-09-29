@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:indicacoes/screens/tela_escolha_genero.dart';
+import 'package:indicacoes/screens/tela_escolha_indicacao.dart';
+import 'package:indicacoes/screens/tela_indicacao.dart';
 
 import '../config/cores.dart';
 import '../widgets/botao.dart';
 
-class TelaEscolhaIndicacao extends StatefulWidget {
-  const TelaEscolhaIndicacao({Key? key}) : super(key: key);
+class TelaEscolhaTipoIndicacao extends StatefulWidget {
+  const TelaEscolhaTipoIndicacao({Key? key}) : super(key: key);
 
   @override
-  State<TelaEscolhaIndicacao> createState() => _TelaEscolhaIndicacaoState();
+  State<TelaEscolhaTipoIndicacao> createState() =>
+      _TelaEscolhaTipoIndicacaoState();
 }
 
-class _TelaEscolhaIndicacaoState extends State<TelaEscolhaIndicacao> {
-  String? tipoIndicacao;
+class _TelaEscolhaTipoIndicacaoState extends State<TelaEscolhaTipoIndicacao> {
+  TextEditingController telefoneController = TextEditingController();
 
   void _avancarPagina() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => TelaEscolhaGenero(tipoIndicacao!),
+      builder: (context) => const TelaEscolhaIndicacao(),
+    ));
+  }
+
+  void _avancarParaRecomendacaoAleatoria() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const TelaIndicacao("", "", true),
     ));
   }
 
@@ -45,7 +53,7 @@ class _TelaEscolhaIndicacaoState extends State<TelaEscolhaIndicacao> {
                 height: 50,
               ),
               SvgPicture.asset(
-                "assets/images/Tela_1.svg",
+                "assets/images/Tela_tipo_indicacao.svg",
                 height: MediaQuery.of(context).size.height * 0.3,
               ),
               const SizedBox(
@@ -54,7 +62,7 @@ class _TelaEscolhaIndicacaoState extends State<TelaEscolhaIndicacao> {
               FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  "O que você quer assistir?",
+                  "Qual tipo de indicação\nvocê quer?",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.quicksand(
                     fontSize: 64,
@@ -69,23 +77,17 @@ class _TelaEscolhaIndicacaoState extends State<TelaEscolhaIndicacao> {
               Column(
                 children: [
                   Botao(
-                    "Série",
+                    "Indicação detalhada",
                     Icons.done_rounded,
-                    () {
-                      tipoIndicacao = "Série";
-                      _avancarPagina();
-                    },
+                    _avancarPagina,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   Botao(
-                    "Filme",
+                    "Indicação aleatória",
                     Icons.done_rounded,
-                    () {
-                      tipoIndicacao = "Filme";
-                      _avancarPagina();
-                    },
+                    _avancarParaRecomendacaoAleatoria,
                   ),
                 ],
               ),

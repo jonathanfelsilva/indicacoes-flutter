@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:indicacoes/screens/tela_inicial.dart';
 
 import 'config/cores.dart';
@@ -15,6 +16,12 @@ class App extends StatelessWidget {
     return MaterialApp(
         title: 'Indicações',
         theme: ThemeData(
+          textTheme: TextTheme(
+              subtitle1: GoogleFonts.quicksand(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Cores.ROXO,
+          )),
           primaryColor: Cores.AZUL,
         ),
         debugShowCheckedModeBanner: false,

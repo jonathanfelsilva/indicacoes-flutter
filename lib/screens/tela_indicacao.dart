@@ -55,48 +55,53 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    "assets/images/Tela_3.svg",
-                    height: MediaQuery.of(context).size.height * 0.3,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      "Buscando...",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.quicksand(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w600,
-                        color: Cores.ROXO,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/images/Tela_3.svg",
+                      height: MediaQuery.of(context).size.height * 0.3,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        "Buscando...",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.quicksand(
+                          fontSize: 60,
+                          fontWeight: FontWeight.w600,
+                          color: Cores.ROXO,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      "Já pode ir pegando a pipoca!",
-                      style: GoogleFonts.quicksand(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromARGB(255, 100, 100, 100),
-                      ),
-                      textAlign: TextAlign.center,
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  const CircularProgressIndicator()
-                ],
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        "Já pode ir pegando a pipoca!",
+                        style: GoogleFonts.quicksand(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w400,
+                          color: Color.fromARGB(255, 100, 100, 100),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    const CircularProgressIndicator()
+                  ],
+                ),
               ),
             );
           } else {
@@ -112,7 +117,7 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: FadeInImage.assetNetwork(
-                        fadeInDuration: const Duration(milliseconds: 100),
+                        fadeInDuration: const Duration(milliseconds: 200),
                         image: snapshot.data!.pathImagem,
                         placeholder: '/images/Transparente.png',
                         height: 300,
@@ -146,15 +151,46 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      'Nota: ${snapshot.data!.nota.toString()}',
-                      style: GoogleFonts.quicksand(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                      textAlign: TextAlign.center,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          snapshot.data!.nota / 2 >= 1
+                              ? Icons.star
+                              : Icons.star_border,
+                          color: Colors.amber,
+                        ),
+                        Icon(
+                            snapshot.data!.nota / 2 >= 2
+                                ? Icons.star
+                                : Icons.star_border,
+                            color: Colors.amber),
+                        Icon(
+                            snapshot.data!.nota / 2 >= 3
+                                ? Icons.star
+                                : Icons.star_border,
+                            color: Colors.amber),
+                        Icon(
+                            snapshot.data!.nota / 2 >= 4
+                                ? Icons.star
+                                : Icons.star_border,
+                            color: Colors.amber),
+                        Icon(
+                            snapshot.data!.nota / 2 >= 5
+                                ? Icons.star
+                                : Icons.star_border,
+                            color: Colors.amber)
+                      ],
                     ),
+                    // Text(
+                    //   'Nota: ${(snapshot.data!.nota / 2).toString()}',
+                    //   style: GoogleFonts.quicksand(
+                    //     fontSize: 22,
+                    //     fontWeight: FontWeight.w600,
+                    //     color: Colors.black,
+                    //   ),
+                    //   textAlign: TextAlign.center,
+                    // ),
                     const SizedBox(
                       height: 25,
                     ),
@@ -172,7 +208,7 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
                                     borderRadius: BorderRadius.circular(10),
                                     child: FadeInImage.assetNetwork(
                                       fadeInDuration:
-                                          const Duration(milliseconds: 100),
+                                          const Duration(milliseconds: 200),
                                       image:
                                           'https://image.tmdb.org/t/p/w500${lugar["logo_path"]}',
                                       placeholder: '/images/Transparente.png',

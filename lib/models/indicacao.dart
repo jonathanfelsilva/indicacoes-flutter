@@ -1,4 +1,5 @@
 class Indicacao {
+  int id;
   String titulo;
   String descricao;
   String pathImagem;
@@ -7,6 +8,7 @@ class Indicacao {
   List<dynamic> lugaresDisponibilidade;
 
   Indicacao({
+    required this.id,
     required this.titulo,
     required this.descricao,
     required this.pathImagem,
@@ -17,6 +19,6 @@ class Indicacao {
 
   @override
   String toString() {
-    return 'Indicacao{titulo: $titulo, descricao: $descricao, pathImagem: $pathImagem, nota: $nota, generos: $generos}';
+    return 'Indicacao{id: $id, titulo: $titulo, descricao: $descricao, pathImagem: $pathImagem, nota: $nota, generos: $generos}';
   }
 }

@@ -21,10 +21,15 @@ class TelaEscolhaGenero extends StatefulWidget {
 class _TelaEscolhaGeneroState extends State<TelaEscolhaGenero> {
   String? genero;
 
+  final formKey = GlobalKey<FormState>();
+
   void _avancarPagina() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => TelaIndicacao(widget.tipoIndicacao, genero, false),
-    ));
+    if (formKey.currentState!.validate()) {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            TelaIndicacao(widget.tipoIndicacao, genero, false),
+      ));
+    }
   }
 
   Future<List<String>> _getGenres() async {
@@ -85,14 +90,20 @@ class _TelaEscolhaGeneroState extends State<TelaEscolhaGenero> {
                       height: 50,
                     ),
                     Form(
+                      key: formKey,
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width < 600
                             ? MediaQuery.of(context).size.width * 0.8
-                            : MediaQuery.of(context).size.width / 2,
+                            : MediaQuery.of(context).size.width / 3,
                         child: DropdownSearch<String>(
-                          popupProps: const PopupProps.modalBottomSheet(
+                          popupProps: PopupProps.modalBottomSheet(
                             searchFieldProps: TextFieldProps(
-                              decoration: InputDecoration(
+                              style: GoogleFonts.quicksand(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Cores.ROXO,
+                              ),
+                              decoration: const InputDecoration(
                                 hintText: "Digite aqui para buscar",
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.grey)),
@@ -101,7 +112,10 @@ class _TelaEscolhaGeneroState extends State<TelaEscolhaGenero> {
                               ),
                             ),
                             showSearchBox: true,
-                            searchDelay: Duration(seconds: 0),
+                            listViewProps: const ListViewProps(
+                              physics: BouncingScrollPhysics(),
+                            ),
+                            searchDelay: const Duration(seconds: 0),
                           ),
                           items: snapshot.data!,
                           dropdownDecoratorProps: DropDownDecoratorProps(
@@ -109,6 +123,11 @@ class _TelaEscolhaGeneroState extends State<TelaEscolhaGenero> {
                               hintText: "Gênero",
                               hintStyle: GoogleFonts.quicksand(
                                 fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Cores.ROXO,
+                              ),
+                              labelStyle: GoogleFonts.quicksand(
+                                fontSize: 15,
                                 fontWeight: FontWeight.w600,
                                 color: Cores.ROXO,
                               ),
@@ -125,7 +144,7 @@ class _TelaEscolhaGeneroState extends State<TelaEscolhaGenero> {
                           },
                           validator: (texto) {
                             if (texto == null) {
-                              return "Campo obrigatório";
+                              return "Escolha um gênero para continuar";
                             }
 
                             return null;
