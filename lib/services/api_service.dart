@@ -63,6 +63,7 @@ Future<Indicacao> getRecommendation(context, tipoIndicacao, genero) async {
         pathImagem: pathImagem,
         nota: nota,
         generos: generos,
+        tipo: tipoIndicacao,
         lugaresDisponibilidade: lugaresDisponibilidade);
 
     return indicacaoTratada;
@@ -82,6 +83,7 @@ Future<Indicacao> getRecommendation(context, tipoIndicacao, genero) async {
         descricao: "Parece que deu algo errado... por gentileza, clique no botão abaixo para tentar novamente.",
         nota: 0.0,
         generos: "",
+        tipo: "",
         lugaresDisponibilidade: [{}]);
   }
 }
@@ -113,6 +115,7 @@ Future<Indicacao> getRandomRecommendation(context) async {
         pathImagem: pathImagem,
         nota: nota,
         generos: generos,
+        tipo: tipo,
         lugaresDisponibilidade: lugaresDisponibilidade);
 
     return indicacaoTratada;
@@ -132,6 +135,7 @@ Future<Indicacao> getRandomRecommendation(context) async {
         descricao: "Parece que deu algo errado... por gentileza, clique no botão abaixo para tentar novamente.",
         nota: 0.0,
         generos: "",
+        tipo: "",
         lugaresDisponibilidade: [{}]);
   }
 }
@@ -172,12 +176,114 @@ Future<List<Indicacao>> getTopThree(context, serieOuFilme) async {
           pathImagem: pathImagem,
           nota: nota,
           generos: generos,
+          tipo: serieOuFilme,
           lugaresDisponibilidade: lugaresDisponibilidade);
 
       topTres.add(indicacaoTratada);
     }
 
     return topTres;
+  } catch (erro) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text(
+          'Ocorreu um erro ao obter a indicação. Por favor, tente novamente mais tarde.'),
+      duration: Duration(seconds: 5),
+      backgroundColor: Colors.red,
+    ));
+    return [];
+  }
+}
+
+Future<Indicacao> getCompleteData(context, Indicacao indicacao) async {
+  try {
+    var dio = Dio();
+    String path = '';
+
+    if (indicacao.tipo == 'Série') {
+      path = 'http://localhost:3730/tv-series/findById/${indicacao.id}';
+    } else {
+      path = 'http://localhost:3730/movies/findById/${indicacao.id}';
+    }
+
+    var resposta = await dio.get(path);
+    var item = resposta.data["data"];
+
+    Indicacao indicacaoCompleta = Indicacao(
+        id: item["id"],
+        titulo: indicacao.tipo == 'Série' ? item["name"] : item["title"],
+        descricao: item["overview"],
+        pathImagem: "https://image.tmdb.org/t/p/w500${item["poster_path"]}",
+        nota: item["vote_average"],
+        generos: item["genres"],
+        tipo: indicacao.tipo,
+        lugaresDisponibilidade: item["placesToWatch"] ?? []);
+
+    return indicacaoCompleta;
+  } catch (erro) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text(
+          'Ocorreu um erro ao obter a indicação. Por favor, tente novamente mais tarde.'),
+      duration: Duration(seconds: 5),
+      backgroundColor: Colors.red,
+    ));
+    return Indicacao(
+        id: 1,
+        titulo: "Nenhuma indicação encontrada",
+        pathImagem:
+            "https://cdn.pixabay.com/photo/2016/05/14/18/23/emoticon-1392275_960_720.png",
+        descricao: "Parece que deu algo errado... por gentileza, clique no botão abaixo para tentar novamente.",
+        nota: 0.0,
+        generos: "",
+        tipo: "",
+        lugaresDisponibilidade: [{}]);
+  }
+}
+
+Future<List<Indicacao>> getMovieTvSerieByName(
+    context, nome, serieOuFilme) async {
+  try {
+    var dio = Dio();
+    String path = '';
+
+    if (serieOuFilme == 'Série') {
+      path = 'http://localhost:3730/tv-series/findByName?name=$nome';
+    } else {
+      path = 'http://localhost:3730/movies/findByTitle?title=$nome';
+    }
+
+    var resposta = await dio.get(path);
+    List resultado = resposta.data["data"];
+
+    List<Indicacao> itens = [];
+
+    for (var i = 0; i < resultado.length; i++) {
+      var indicacao = resultado[i];
+
+      var id = indicacao["id"];
+      var titulo =
+          serieOuFilme == 'Série' ? indicacao["name"] : indicacao["title"];
+      var descricao = indicacao["overview"];
+      var pathImagem =
+          "https://image.tmdb.org/t/p/w500${indicacao["poster_path"]}";
+      var nota = indicacao["vote_average"];
+      var generos = indicacao["genres"];
+      var lugaresDisponibilidade = indicacao["placesToWatch"] ?? [];
+
+      Indicacao indicacaoTratada = Indicacao(
+          id: id,
+          titulo: titulo,
+          descricao: descricao,
+          pathImagem: pathImagem,
+          nota: nota,
+          generos: generos,
+          tipo: serieOuFilme,
+          lugaresDisponibilidade: lugaresDisponibilidade);
+
+      itens.add(indicacaoTratada);
+    }
+    return itens;
   } catch (erro) {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

@@ -5,6 +5,7 @@ class Indicacao {
   String pathImagem;
   double nota;
   String generos;
+  String tipo;
   List<dynamic> lugaresDisponibilidade;
 
   Indicacao({
@@ -14,11 +15,12 @@ class Indicacao {
     required this.pathImagem,
     required this.nota,
     required this.generos,
+    required this.tipo,
     required this.lugaresDisponibilidade,
   });
 
   @override
   String toString() {
-    return 'Indicacao{id: $id, titulo: $titulo, descricao: $descricao, pathImagem: $pathImagem, nota: $nota, generos: $generos}';
+    return 'Indicacao{id: $id, titulo: $titulo, descricao: $descricao, pathImagem: $pathImagem, nota: $nota, generos: $generos, tipo: $tipo}';
   }
 }

@@ -19,7 +19,7 @@ class _TelaTopTresState extends State<TelaTopTres> {
   Future<Map<String, List<Indicacao>>> _gerarListaTopIndicacoes() async {
     List<Indicacao> topFilmes = await api.getTopThree(context, 'Filme');
     List<Indicacao> topSeries = await api.getTopThree(context, 'Série');
-    Map<String, List<Indicacao>> listaCompleta = Map<String, List<Indicacao>>();
+    Map<String, List<Indicacao>> listaCompleta = <String, List<Indicacao>>{};
     listaCompleta["filmes"] = topFilmes;
     listaCompleta["series"] = topSeries;
     return listaCompleta;
@@ -79,7 +79,7 @@ class _TelaTopTresState extends State<TelaTopTres> {
                         style: GoogleFonts.quicksand(
                           fontSize: 25,
                           fontWeight: FontWeight.w400,
-                          color: Color.fromARGB(255, 100, 100, 100),
+                          color: const Color.fromARGB(255, 100, 100, 100),
                         ),
                         textAlign: TextAlign.center,
                       ),

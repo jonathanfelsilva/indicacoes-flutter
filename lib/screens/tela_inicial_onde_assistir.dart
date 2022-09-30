@@ -1,44 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:indicacoes/screens/tela_escolha_tipo_indicacao.dart';
-import 'package:indicacoes/screens/tela_top_tres.dart';
+import 'package:indicacoes/screens/tela_busca_titulo.dart';
+import 'package:indicacoes/screens/tela_escolha_genero.dart';
 
 import '../config/cores.dart';
 import '../widgets/botao.dart';
-import 'tela_inicial_onde_assistir.dart';
 
-class TelaInicial extends StatefulWidget {
-  const TelaInicial({Key? key}) : super(key: key);
+class TelaInicialOndeAssistir extends StatefulWidget {
+  const TelaInicialOndeAssistir({Key? key}) : super(key: key);
 
   @override
-  State<TelaInicial> createState() => _TelaInicialState();
+  State<TelaInicialOndeAssistir> createState() =>
+      _TelaInicialOndeAssistirState();
 }
 
-class _TelaInicialState extends State<TelaInicial> {
-  TextEditingController telefoneController = TextEditingController();
+class _TelaInicialOndeAssistirState extends State<TelaInicialOndeAssistir> {
+  String? tipoIndicacao;
 
   void _avancarPagina() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const TelaEscolhaTipoIndicacao(),
-    ));
-  }
-
-  void _avancarParaTopTres() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const TelaTopTres(),
-    ));
-  }
-
-  void _avancarParaOndeAssistir() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const TelaInicialOndeAssistir(),
+      builder: (context) => TelaBuscaTitulo(tipoIndicacao!),
     ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        iconTheme: const IconThemeData(
+          color: Cores.AZUL,
+          size: 40,
+        ),
+      ),
       backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
@@ -50,7 +47,7 @@ class _TelaInicialState extends State<TelaInicial> {
                 height: 50,
               ),
               SvgPicture.asset(
-                "assets/images/Tela_inicial.svg",
+                "assets/images/Onde_assistir.svg",
                 height: MediaQuery.of(context).size.height * 0.3,
               ),
               const SizedBox(
@@ -59,7 +56,7 @@ class _TelaInicialState extends State<TelaInicial> {
               FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  "Olá! Que bom te ver\npor aqui.",
+                  "Você quer informações\nsobre o quê?",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.quicksand(
                     fontSize: 64,
@@ -69,45 +66,28 @@ class _TelaInicialState extends State<TelaInicial> {
                 ),
               ),
               const SizedBox(
-                height: 20,
-              ),
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  "Do que você precisa hoje?",
-                  style: GoogleFonts.quicksand(
-                    fontSize: 36,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const SizedBox(
                 height: 50,
               ),
               Column(
                 children: [
                   Botao(
-                    "Indicação",
+                    "Série",
                     Icons.done_rounded,
-                    _avancarPagina,
+                    () {
+                      tipoIndicacao = "Série";
+                      _avancarPagina();
+                    },
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   Botao(
-                    "Onde assistir",
+                    "Filme",
                     Icons.done_rounded,
-                    _avancarParaOndeAssistir,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Botao(
-                    "Top 3 diário",
-                    Icons.done_rounded,
-                    _avancarParaTopTres,
+                    () {
+                      tipoIndicacao = "Filme";
+                      _avancarPagina();
+                    },
                   ),
                 ],
               ),

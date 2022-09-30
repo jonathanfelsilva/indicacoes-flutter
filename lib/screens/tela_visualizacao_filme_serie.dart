@@ -4,37 +4,26 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../config/cores.dart';
 import '../models/indicacao.dart';
-import '../widgets/botao.dart';
 
 import '../services/api_service.dart' as api;
 
-class TelaIndicacao extends StatefulWidget {
-  const TelaIndicacao(this.tipoIndicacao, this.genero, this.random, {Key? key})
+class TelaVisualizacaoFilmeSerie extends StatefulWidget {
+  const TelaVisualizacaoFilmeSerie(this.indicacao, {Key? key})
       : super(key: key);
 
-  final String? tipoIndicacao;
-  final String? genero;
-  final bool? random;
+  final Indicacao indicacao;
 
   @override
-  State<TelaIndicacao> createState() => _TelaIndicacaoState();
+  State<TelaVisualizacaoFilmeSerie> createState() =>
+      _TelaVisualizacaoFilmeSerieState();
 }
 
-class _TelaIndicacaoState extends State<TelaIndicacao> {
-  void _gerarOutraRecomendacao() {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (context) =>
-          TelaIndicacao(widget.tipoIndicacao, widget.genero, widget.random),
-    ));
-  }
-
-  Future<Indicacao> _gerarIndicacao() async {
-    Indicacao indicacao = widget.random == false
-        ? await api.getRecommendation(
-            context, widget.tipoIndicacao, widget.genero)
-        : await api.getRandomRecommendation(context);
-
-    return indicacao;
+class _TelaVisualizacaoFilmeSerieState
+    extends State<TelaVisualizacaoFilmeSerie> {
+  Future<Indicacao> _buscarDadosCompletos() async {
+    Indicacao indicacaoCompleta =
+        await api.getCompleteData(context, widget.indicacao);
+    return indicacaoCompleta;
   }
 
   @override
@@ -51,7 +40,7 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
       ),
       backgroundColor: Colors.white,
       body: FutureBuilder<Indicacao>(
-        future: _gerarIndicacao(),
+        future: _buscarDadosCompletos(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(
@@ -258,14 +247,6 @@ class _TelaIndicacaoState extends State<TelaIndicacao> {
                     ),
                     const SizedBox(
                       height: 50,
-                    ),
-                    Botao(
-                      "Quero outra indicação",
-                      Icons.done_rounded,
-                      _gerarOutraRecomendacao,
-                    ),
-                    const SizedBox(
-                      width: 50,
                     ),
                   ]),
                 ),

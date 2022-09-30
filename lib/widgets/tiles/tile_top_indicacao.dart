@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:indicacoes/screens/tela_visualizacao_top_indicacao.dart';
+import 'package:indicacoes/screens/tela_visualizacao_filme_serie.dart';
 
 import '../../models/indicacao.dart';
 
@@ -13,9 +13,9 @@ class TileTopIndicacao extends StatefulWidget {
 }
 
 class _TileTopIndicacaoState extends State<TileTopIndicacao> {
-  void _abrirPaginaIndicacao() {
+  void _abrirPaginaIndicacao() async {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => TelaVisualizacaoTopIndicacao(widget.indicacao),
+      builder: (context) => TelaVisualizacaoFilmeSerie(widget.indicacao),
     ));
   }
 
