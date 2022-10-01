@@ -63,7 +63,7 @@ class _TelaBuscaTituloState extends State<TelaBuscaTitulo> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   Form(
                     child: SizedBox(
@@ -133,7 +133,7 @@ class _TelaBuscaTituloState extends State<TelaBuscaTitulo> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   BotaoMenor(
                     "Buscar",

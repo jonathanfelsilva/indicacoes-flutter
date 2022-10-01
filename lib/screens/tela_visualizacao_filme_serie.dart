@@ -110,6 +110,9 @@ class _TelaVisualizacaoFilmeSerieState
                         fadeInDuration: const Duration(milliseconds: 200),
                         image: snapshot.data!.pathImagem,
                         placeholder: '/images/Transparente.png',
+                        imageErrorBuilder: (BuildContext context,
+                                Object exception, StackTrace? stackTrace) =>
+                            const Icon(Icons.question_mark_rounded),
                         height: 300,
                         fit: BoxFit.cover,
                       ),
@@ -216,6 +219,11 @@ class _TelaVisualizacaoFilmeSerieState
                                       image:
                                           'https://image.tmdb.org/t/p/w500${lugar["logo_path"]}',
                                       placeholder: '/images/Transparente.png',
+                                      imageErrorBuilder: (BuildContext context,
+                                              Object exception,
+                                              StackTrace? stackTrace) =>
+                                          const Icon(
+                                              Icons.question_mark_rounded),
                                       height: 50,
                                       fit: BoxFit.cover,
                                     ),

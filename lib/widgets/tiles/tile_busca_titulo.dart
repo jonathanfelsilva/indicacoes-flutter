@@ -46,6 +46,9 @@ class _TileBuscaTituloState extends State<TileBuscaTitulo> {
                   fadeInDuration: const Duration(milliseconds: 500),
                   image: widget.indicacao.pathImagem,
                   placeholder: '/images/Transparente.png',
+                  imageErrorBuilder: (BuildContext context, Object exception,
+                          StackTrace? stackTrace) =>
+                      const Icon(Icons.question_mark_rounded),
                   height: 350,
                 ),
               ),

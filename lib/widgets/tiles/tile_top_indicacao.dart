@@ -38,6 +38,9 @@ class _TileTopIndicacaoState extends State<TileTopIndicacao> {
                   fadeInDuration: const Duration(milliseconds: 200),
                   image: widget.indicacao.pathImagem,
                   placeholder: '/images/Transparente.png',
+                  imageErrorBuilder: (BuildContext context, Object exception,
+                          StackTrace? stackTrace) =>
+                      const Icon(Icons.question_mark_rounded),
                   height: 250,
                   fit: BoxFit.cover,
                 ),
