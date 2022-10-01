@@ -106,7 +106,7 @@ class _TelaEscolhaGeneroState extends State<TelaEscolhaGenero> {
                               decoration: const InputDecoration(
                                 hintText: "Digite aqui para buscar",
                                 enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey)),
+                                    borderSide: BorderSide(color: Cores.CINZA)),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Cores.AZUL)),
                               ),

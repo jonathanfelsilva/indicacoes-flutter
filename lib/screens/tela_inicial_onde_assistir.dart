@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:indicacoes/screens/tela_busca_titulo.dart';
-import 'package:indicacoes/screens/tela_escolha_genero.dart';
 
 import '../config/cores.dart';
 import '../widgets/botao.dart';
@@ -56,7 +55,7 @@ class _TelaInicialOndeAssistirState extends State<TelaInicialOndeAssistir> {
               FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  "Você quer informações\nsobre o quê?",
+                  "O que você vai ver?",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.quicksand(
                     fontSize: 64,

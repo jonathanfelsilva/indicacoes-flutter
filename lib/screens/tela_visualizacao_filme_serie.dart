@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import '../config/cores.dart';
 import '../models/indicacao.dart';
@@ -124,6 +125,20 @@ class _TelaVisualizacaoFilmeSerieState
                         fontWeight: FontWeight.w600,
                         color: Cores.ROXO,
                       ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      DateFormat('dd/MM/yyyy')
+                          .format(DateTime.parse(snapshot.data!.dataLancamento))
+                          .toString(),
+                      style: GoogleFonts.quicksand(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(
                       height: 10,

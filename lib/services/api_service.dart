@@ -54,6 +54,9 @@ Future<Indicacao> getRecommendation(context, tipoIndicacao, genero) async {
         "https://image.tmdb.org/t/p/w500/${indicacao["poster_path"]}";
     var nota = indicacao["vote_average"];
     var generos = indicacao["genres"];
+    var dataLancamento = tipoIndicacao == "Série"
+        ? indicacao["first_air_date"]
+        : indicacao["release_date"];
     var lugaresDisponibilidade = indicacao["placesToWatch"] ?? [];
 
     Indicacao indicacaoTratada = Indicacao(
@@ -64,6 +67,7 @@ Future<Indicacao> getRecommendation(context, tipoIndicacao, genero) async {
         nota: nota,
         generos: generos,
         tipo: tipoIndicacao,
+        dataLancamento: dataLancamento,
         lugaresDisponibilidade: lugaresDisponibilidade);
 
     return indicacaoTratada;
@@ -84,6 +88,7 @@ Future<Indicacao> getRecommendation(context, tipoIndicacao, genero) async {
         nota: 0.0,
         generos: "",
         tipo: "",
+        dataLancamento: "",
         lugaresDisponibilidade: [{}]);
   }
 }
@@ -106,6 +111,9 @@ Future<Indicacao> getRandomRecommendation(context) async {
         "https://image.tmdb.org/t/p/w500${indicacao["poster_path"]}";
     var nota = indicacao["vote_average"];
     var generos = indicacao["genres"];
+    var dataLancamento = tipo == "Série"
+        ? indicacao["first_air_date"]
+        : indicacao["release_date"];
     var lugaresDisponibilidade = indicacao["placesToWatch"] ?? [];
 
     Indicacao indicacaoTratada = Indicacao(
@@ -116,6 +124,7 @@ Future<Indicacao> getRandomRecommendation(context) async {
         nota: nota,
         generos: generos,
         tipo: tipo,
+        dataLancamento: dataLancamento,
         lugaresDisponibilidade: lugaresDisponibilidade);
 
     return indicacaoTratada;
@@ -136,6 +145,7 @@ Future<Indicacao> getRandomRecommendation(context) async {
         nota: 0.0,
         generos: "",
         tipo: "",
+        dataLancamento: "",
         lugaresDisponibilidade: [{}]);
   }
 }
@@ -167,6 +177,9 @@ Future<List<Indicacao>> getTopThree(context, serieOuFilme) async {
           "https://image.tmdb.org/t/p/w500${indicacao["poster_path"]}";
       var nota = indicacao["vote_average"];
       var generos = indicacao["genres"];
+      var dataLancamento = serieOuFilme == "Série"
+          ? indicacao["first_air_date"]
+          : indicacao["release_date"];
       var lugaresDisponibilidade = indicacao["placesToWatch"] ?? [];
 
       Indicacao indicacaoTratada = Indicacao(
@@ -177,6 +190,7 @@ Future<List<Indicacao>> getTopThree(context, serieOuFilme) async {
           nota: nota,
           generos: generos,
           tipo: serieOuFilme,
+          dataLancamento: dataLancamento,
           lugaresDisponibilidade: lugaresDisponibilidade);
 
       topTres.add(indicacaoTratada);
@@ -217,6 +231,9 @@ Future<Indicacao> getCompleteData(context, Indicacao indicacao) async {
         nota: item["vote_average"],
         generos: item["genres"],
         tipo: indicacao.tipo,
+        dataLancamento: indicacao.tipo == "Série"
+            ? item["first_air_date"]
+            : item["release_date"],
         lugaresDisponibilidade: item["placesToWatch"] ?? []);
 
     return indicacaoCompleta;
@@ -237,6 +254,7 @@ Future<Indicacao> getCompleteData(context, Indicacao indicacao) async {
         nota: 0.0,
         generos: "",
         tipo: "",
+        dataLancamento: "",
         lugaresDisponibilidade: [{}]);
   }
 }
@@ -269,6 +287,9 @@ Future<List<Indicacao>> getMovieTvSerieByName(
           "https://image.tmdb.org/t/p/w500${indicacao["poster_path"]}";
       var nota = indicacao["vote_average"];
       var generos = indicacao["genres"];
+      var dataLancamento = serieOuFilme == "Série"
+          ? indicacao["first_air_date"]
+          : indicacao["release_date"];
       var lugaresDisponibilidade = indicacao["placesToWatch"] ?? [];
 
       Indicacao indicacaoTratada = Indicacao(
@@ -279,6 +300,7 @@ Future<List<Indicacao>> getMovieTvSerieByName(
           nota: nota,
           generos: generos,
           tipo: serieOuFilme,
+          dataLancamento: dataLancamento,
           lugaresDisponibilidade: lugaresDisponibilidade);
 
       itens.add(indicacaoTratada);

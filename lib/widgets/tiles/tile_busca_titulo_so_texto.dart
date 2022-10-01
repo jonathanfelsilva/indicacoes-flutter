@@ -23,30 +23,26 @@ class _TileBuscaTituloState extends State<TileBuscaTitulo> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        elevation: 0,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
+    return SizedBox(
+      child: Padding(
+        padding: const EdgeInsets.all(4),
+        child: Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: const BorderSide(
+                color: Cores.AZUL,
+                width: 2,
+              )),
           child: InkWell(
             borderRadius: BorderRadius.circular(10),
             onTap: _abrirPaginaFilmeSerie,
-            child: SizedBox(
-              width: 250,
-              height: 350,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: FadeInImage.assetNetwork(
-                  fadeInDuration: const Duration(milliseconds: 500),
-                  image: widget.indicacao.pathImagem,
-                  placeholder: '/images/Transparente.png',
-                  height: 350,
+            child: ListTile(
+              title: Text(
+                widget.indicacao.titulo,
+                style: GoogleFonts.quicksand(
+                  fontSize: MediaQuery.of(context).size.width < 600 ? 16 : 26,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ),

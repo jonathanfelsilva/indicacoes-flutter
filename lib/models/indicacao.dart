@@ -6,6 +6,7 @@ class Indicacao {
   double nota;
   String generos;
   String tipo;
+  String dataLancamento;
   List<dynamic> lugaresDisponibilidade;
 
   Indicacao({
@@ -16,6 +17,7 @@ class Indicacao {
     required this.nota,
     required this.generos,
     required this.tipo,
+    required this.dataLancamento,
     required this.lugaresDisponibilidade,
   });
 

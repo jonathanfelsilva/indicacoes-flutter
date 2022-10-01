@@ -49,13 +49,6 @@ class _TelaInicialState extends State<TelaInicial> {
               const SizedBox(
                 height: 50,
               ),
-              SvgPicture.asset(
-                "assets/images/Tela_inicial.svg",
-                height: MediaQuery.of(context).size.height * 0.3,
-              ),
-              const SizedBox(
-                height: 50,
-              ),
               FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
@@ -78,7 +71,7 @@ class _TelaInicialState extends State<TelaInicial> {
                   style: GoogleFonts.quicksand(
                     fontSize: 36,
                     fontWeight: FontWeight.w400,
-                    color: Colors.grey,
+                    color: Cores.CINZA,
                   ),
                   textAlign: TextAlign.center,
                 ),
