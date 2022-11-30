@@ -102,13 +102,24 @@ class _TelaTopTresState extends State<TelaTopTres> {
                     children: [
                       FittedBox(
                         fit: BoxFit.scaleDown,
-                        child: Text(
-                          "Top 3 de hoje",
-                          style: GoogleFonts.quicksand(
-                            fontSize: 80,
-                            fontWeight: FontWeight.w600,
-                            color: Cores.AZUL,
-                          ),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Top 3 de hoje",
+                              style: GoogleFonts.quicksand(
+                                fontSize: 80,
+                                fontWeight: FontWeight.w600,
+                                color: Cores.AZUL,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            SvgPicture.asset(
+                              "assets/images/fogo.svg",
+                              height: 100,
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(
